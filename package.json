@@ -1,0 +1,23 @@
+{
+  "name": "lucky-draw",
+  "version": "1.0.0",
+  "description": "Lucky Draw, random picker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yaoang/lucky-draw.git"
+  },
+  "keywords": [
+    "Lucky",
+    "Draw"
+  ],
+  "author": "Ang Yao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yaoang/lucky-draw/issues"
+  },
+  "homepage": "https://github.com/yaoang/lucky-draw#readme"
+}
