@@ -2,7 +2,7 @@
   "name": "lucky-draw",
   "version": "1.0.0",
   "description": "Lucky Draw, random picker",
-  "main": "index.js",
+  "main": "public/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/yaoang/lucky-draw/issues"
   },
-  "homepage": "https://github.com/yaoang/lucky-draw#readme"
+  "homepage": "https://github.com/yaoang/lucky-draw#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
 }
