@@ -50,15 +50,14 @@ function pickOne(picker) {
             a3d.removeChild(cn)
 
             if (index === 0) {
-                document.querySelector('.rot:nth-child(1).key').style.marginLeft = '0'
-            }
+                // console.log(document.querySelector('.rot .key'))
+                // document.querySelector('.rot:nth-child(0).key').style.marginLeft = '0'
+                if(document.querySelector('.rot .key')) {
+                    document.querySelector('.rot .key').style.marginLeft = '0'
+                }
 
-            if (index % 2 === 0) {
-                setTimeout(() => pickOne(picker), 100)
-                break
-            }
 
-            if (index === 1) {
+
                 document.getElementById('picker').innerHTML = picker
                 const saved = localStorage.getItem('picked')
                 const all = saved.split(',')
@@ -70,6 +69,26 @@ function pickOne(picker) {
                 document.getElementById('picked').innerHTML = `Picked:(${all.length})<br/> ${all.join(' <br/>')}`
                 document.getElementById('pick-button').disabled = false
             }
+
+            const modeNum = length > 5 ? Math.floor(length / 5) : 2;
+
+            if (index % modeNum === 0) {
+                setTimeout(() => pickOne(picker), 100)
+                break
+            }
+
+            // if (index === 1) {
+            //     document.getElementById('picker').innerHTML = picker
+            //     const saved = localStorage.getItem('picked')
+            //     const all = saved.split(',')
+            //     if (!all[0]) {
+            //         all.length = 0
+            //     }
+            //     all.push(picker)
+            //     localStorage.setItem('picked', all)
+            //     document.getElementById('picked').innerHTML = `Picked:(${all.length})<br/> ${all.join(' <br/>')}`
+            //     document.getElementById('pick-button').disabled = false
+            // }
         } else {
             if (index < 3) {
                 cn.style.fontSize = '4vw'

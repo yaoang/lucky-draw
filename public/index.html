@@ -13,26 +13,27 @@
     <div class="a3d" draggable="true" ondragstart="event.dataTransfer .setData('text/plain',null)"></div>
 
 </div>
-<div class="scroll_screen" id=picked'>
+<div class="scroll_screen" id='picked'>
     Picked:
 </div>
-<div class="picked names" id='picker'>
+<div class="picked_names" id='picker'>
     Who will be picked?
 </div>
-<div class="upload file">
+<div class="upload_file">
     <input type="file" id="name-file"/>
     <button onclick="start()" id='pick-button'>Load and Start to Pick</button>
 
 </div>
 
 <script src="demo/temp/3dText/index.js"></script>
-There is an available upda
 </body>
 <script>
     let names = []
     let keymap = {}
 
     function load() {
+        names = getAllUsers()
+        console.log('names=', names)
         names = names.sort((a, b) => Math.random(names.length) - Math.random(names.length))
         keymap = getKeyMap(names)
         if (names.length > 0) {
@@ -46,10 +47,15 @@ There is an available upda
     }
 
     function randomUser() {
+        const items = localStorage.getItem('picked')
+        if(items && items.split(',').length >= names.length) {
+            return null
+        }
         const win = Math.floor(Math.random() * Object.values(keymap).length)
         const winner = names[win]
-        const items = localstorage.getItem('picked')
+
         if (~items.indexOf(winner)) {
+            console.log(winner)
             return randomUser()
         }
         return winner
@@ -63,7 +69,7 @@ There is an available upda
         const reader = new FileReader();
         reader.onload = function () {
             // console.log(reader.result);
-            nameList = reader.result.split('\r\n');
+            const nameList = reader.result.split('\n');
             window.initNames = nameList.join(',')
             showAndPick(true)
         }
@@ -93,11 +99,6 @@ There is an available upda
         } else {
             showAndPick()
         }
-    }
-
-    function dropFile(evt) {
-        evt.preventDefault();
-        console.log(evt)
     }
 
     window.onload = () => {
