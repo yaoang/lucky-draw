@@ -1,109 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta http-equiv="Content-Type" charset="UTF-8">
-    <title>Awesome Lucky Draw</title>
+    <title>Awesome Lucky Draw Version 2.0</title>
     <link rel="stylesheet" href="style.css">
-    <link type="text/css" href="demo/temp/3dText/style.css" rel="stylesheet">
     <script src="index.js"></script>
 </head>
 
 <body>
-<div class="names dropzone">
-    <div class="a3d" draggable="true" ondragstart="event.dataTransfer .setData('text/plain',null)"></div>
+    <div class="main-container">
+        <div class="record-cover">
+            <div class="title">
+                2023 T&D<br />
+                New Year Luck Draw
+            </div>
+            <div class="desc">2023 Transation and ditital new year luck draw</div>
+            <div class="button">
+                <button onmouseenter="hover(this)" onmouseout="out(this)" onclick="start(this)">
+                    Start Random
+                </button>
+            </div>
+            <div class="name-list">
+                <!-- <div class="item">
+                    Ang Yao
+                </div> -->
+                <!-- <div class="item">
+                    Dish Smith
+                </div>
+                <div class="item">
+                    Tomas Bevid
+                </div> -->
+            </div>
+            <div class="my-record">
+                <div class="record-package">
+                    <img src="./images/package.png" alt="record package">
+                </div>
+                <div class="record">
+                    <img src="./images/record.png" alt="record">
+                </div>
+            </div>
+        </div>
 
-</div>
-<div class="scroll_screen" id='picked'>
-    Picked:
-</div>
-<div class="picked_names" id='picker'>
-    Who will be picked?
-</div>
-<div class="upload_file">
-    <input type="file" id="name-file"/>
-    <button onclick="start()" id='pick-button'>Load and Start to Pick</button>
-
-</div>
-
-<script src="demo/temp/3dText/index.js"></script>
+    </div>
 </body>
 <script>
-    let names = []
-    let keymap = {}
+    function hover() {
+        const img = document.getElementsByClassName('record')[0]
+        img.classList.remove('record')
+        img.classList.add('record2')
 
-    function load() {
-        names = getAllUsers()
-        console.log('names=', names)
-        names = names.sort((a, b) => Math.random(names.length) - Math.random(names.length))
-        keymap = getKeyMap(names)
-        if (names.length > 0) {
-            document.querySelector('.a3d').innerHTML = ''
-        } else {
-            document.querySelector('.a3d').innerHTML = '<div class="rot" style="font-size: 4vw;">' +
-                '<div data-name="Select names file" data-code="83" class="key" style="color:rgb(255, 255,255);"></div></div>'
-        }
-
-        loadTexts(keymap)
+        img.classList.remove('push')
+        img.classList.add('pull')
     }
 
-    function randomUser() {
-        const items = localStorage.getItem('picked')
-        if(items && items.split(',').length >= names.length) {
-            return null
-        }
-        const win = Math.floor(Math.random() * Object.values(keymap).length)
-        const winner = names[win]
+    function out(obj) {
+        const img = document.getElementsByClassName('record2')[0]
+        img.classList.remove('pull')
+        img.classList.add('push')
 
-        if (~items.indexOf(winner)) {
-            console.log(winner)
-            return randomUser()
-        }
-        return winner
+        img.classList.remove('record2')
+        img.classList.add('record')
     }
 
-    document.getElementById("name-file").addEventListener('change', loadNames)
-
-    function loadNames() {
-        document.querySelector('.a3d').innerHTML = '<div class="rot" style="font-size: 4vw;">' +
-            '<div data-name="Loading file" data-code="83" class="key" style="color: rgb(255,255,255);"></div></div>'
-        const reader = new FileReader();
-        reader.onload = function () {
-            // console.log(reader.result);
-            const nameList = reader.result.split('\n');
-            window.initNames = nameList.join(',')
-            showAndPick(true)
+    function addItem(nameList, name, ignoreClass) {
+        const item = document.createElement('div')
+        if(!ignoreClass) {
+            item.classList.add('item')
         }
+        item.innerText = name
+        nameList.appendChild(item)
+    }
+
+    function getOne(nameList, name) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                addItem(nameList, name)
+                resolve(name)
+            }, 100)
+        })
+    }
+
+    async function start(obj) {
+        obj.setAttribute('disabled', '')
+        const animationDeplay = 1000
+        const nameList = document.getElementsByClassName('name-list')[0]
+        nameList.innerHTML = ''
+        const names = ['Ang Yao1', 'Dish Smith2', 'Tomas Bevid3', 'Ang Yao4', 'Dish Smith5', 'Tomas Bevid6', 'Ang Yao7', 'Dish Smith8', 'Tomas Bevid9', 'Ang Yao10', 'Dish Smith11', 'Tomas Bevid12']
+        const length = names.length
+        const rnd = Math.floor(Math.random() * names.length)
+        console.log('lng=', length, ', rnd=', rnd)
+        let index = 0
+        for (let index = 0; index < length; index++) {
+            if (rnd === index) {
+                continue
+            }
+            const name = names[index]
+            await getOne(nameList, name)
+        }
+        const name = names[rnd]
+        await getOne(nameList, name, rnd)
+
         setTimeout(() => {
-            reader.readAsText(this.files[0]);
-        }, 1000)
-    }
-
-    function showAndPick(dontPick) {
-        document.getElementById('pick-button').disabled = true
-        load()
-        if (dontPick) {
-            document.getElementById('pick-button').disabled = false
-            return
-        }
-        document.getElementById('picker').innerText = `Picking one name from ${names.length} names`
-
-        setTimeout(async () => {
-            const winner = randomUser()
-            pickOne(winner)
-        }, 500)
-    }
-
-    async function start() {
-        if (!document.getElementById('name-file').value) {
-            document.getElementById('name-file').click()
-        } else {
-            showAndPick()
-        }
-    }
-
-    window.onload = () => {
-        load()
-        stopAnimationPlay()
+            addItem(nameList, name, true)
+        }, 700)
+        obj.removeAttribute('disabled')
     }
 </script>
+
 </html>

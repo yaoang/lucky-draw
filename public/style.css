@@ -1,80 +1,186 @@
+@media only screen and (max-width: 1080px) {
+    .main-container {
+        width: 62%;
+        left: calc(50% - 62% / 2);
+        /* top: calc(50% - 62% / 2); */
+    }
+}
+
+@media screen and (min-width: 1080px) {
+    .main-container {
+        width: 40%;
+        left: calc(50% - 40% / 2);
+        /* top: calc(50% - 62% / 2); */
+    }
+}
+
 body {
     background-color: rgba(29, 29, 29, 0.94);
     height: 100%;
     width: 100%;
     color: #fff;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
-/*.container {*/
-/*    height: 100%;*/
-/*    width: 100%;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*}*/
-
-/*.container div {*/
-/*    position: relative;*/
-/*}*/
-
-.names {
-    /*height: 100%;*/
-    width: 80%;
-    overflow: hidden;
-    position: relative;
-    border: 1px solid #333;
-    /*flex: 80;*/
-    flex: 5;
-}
-
-.scroll_screen {
-    font-size: 20px;
+.main-container {
+    /* width: 62%; */
+    background-color: #965455;
+    height: 62%;
+    top: calc(50% - 62% / 2);
+    /* height: 500px; */
+    margin: auto;
+    /* display: flex; */
     position: absolute;
-    left: 0;
-    top: 0;
+    
 }
 
-.upload_file {
-    height: 150px;
-    width: 50%;
-    /*border: 1px solid #888;*/
-    background-color: #333;
-    /*text-align:center;*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 30px;
-    flex: 1;
+.main-container .title {
+    color: #e3c5bb;
+    font-size: 2.5em;
+    margin-top: 10%;
+    margin-left: 5%;
 }
 
-.upload_file button {
-    /*height: 100%;*/
+.main-container .desc {
+    color: #e3c5bb;
+    font-size: 0.5em;
+    margin-left: 5%;
+    opacity: 0.7;
+}
+
+.main-container .button {
+    display: inline;
+}
+
+.main-container .button button {
+    position: absolute;
+    left: 5%;
+    top: 80%;
+    border: 1px solid #e3c5bb;
+    background-color: transparent;
+    /* height: 2.5em; */
+    font-size: 1.545em;
+    padding: 0.478em;
+    color: #e3c5bb;
+    cursor: pointer;
+}
+
+.main-container .button button:hover {
+    opacity: .7;
+}
+
+.record-package {
+    width: 23em;
+    position: absolute;
+    bottom: -1em;
+    right: -10em;
+    z-index: 10;
+}
+
+.record-package img {
     width: 100%;
     border: none;
-    background-color: #333;
-    color: #fff;
-    cursor: pointer;
-    font-size: 30px;
 }
 
-.upload_file button:disabled {
-    color: #777;
-    background-color: #333;
+@keyframes pull-record {
+    to {
+        bottom: 5.4em;
+        right: -9.7em;
+    }
+
+    from {
+        bottom: 2.7em;
+        right: -5em;
+    }
 }
 
-.upload_file button:hover:enabled {
-    background-color: #666;
+@keyframes push-record {
+    from {
+        bottom: 5.4em;
+        right: -9.7em;
+    }
+
+    to {
+        bottom: 2.7em;
+        right: -5em;
+    }
 }
 
-.picked_names {
-    font-size: 30px;
-    color: #ffff00;
-    flex: 1;
+.record {
+    width: 10.6em;
+    position: absolute;
+    bottom: 2.7em;
+    right: -5em;
+    z-index: 3;
 }
 
-#name-file {
-    width: 0;
+.record2 {
+    width: 10.6em;
+    position: absolute;
+    bottom: 5.4em;
+    right: -9.7em;
+    z-index: 3;
+}
+
+.record2.pull {
+    animation-name: pull-record;
+    animation-duration: 3s;
+}
+
+.record.push {
+    animation-name: push-record;
+    animation-duration: 3s;
+}
+
+.record img {
+    width: 100%;
+    border: none;
+}
+
+.record2 img {
+    width: 100%;
+    border: none;
+}
+
+.name-list {
+    margin-left: 5%;
+    margin-top: .5em;
+    height: 10em;
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes name-smoth {
+    from {
+        top: 5em;
+        opacity: 0;
+    }
+
+    30% {
+        opacity: .3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: .3;
+    }
+
+    to {
+        top: 0;
+        opacity: 0;
+    }
+}
+
+.name-list .item {
+    position: absolute;
+    opacity: 0;
+    animation-name: name-smoth;
+    animation-duration: 1s;
 }
