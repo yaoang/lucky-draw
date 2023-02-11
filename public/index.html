@@ -9,27 +9,22 @@
 </head>
 
 <body>
+    <div class="result"></div>
     <div class="main-container">
         <div class="record-cover">
             <div class="title">
                 2023 T&D<br />
-                New Year Luck Draw
+                New Year Lucky Draw
             </div>
             <div class="desc">2023 Transation and ditital new year luck draw</div>
             <div class="button">
-                <button onmouseenter="hover(this)" onmouseout="out(this)" onclick="start(this)">
-                    Start Random
+                <button onclick="start(this)">
+                    Run Lucky draw
                 </button>
             </div>
             <div class="name-list">
                 <!-- <div class="item">
                     Ang Yao
-                </div> -->
-                <!-- <div class="item">
-                    Dish Smith
-                </div>
-                <div class="item">
-                    Tomas Bevid
                 </div> -->
             </div>
             <div class="my-record">
@@ -42,30 +37,47 @@
             </div>
         </div>
 
+        <!-- <div class="lucky-name">
+            <img src="./images/round.png">
+            <div class="name">Ang Yao</div>
+        </div> -->
     </div>
 </body>
 <script>
-    function hover() {
+    async function hover() {
         const img = document.getElementsByClassName('record')[0]
-        img.classList.remove('record')
-        img.classList.add('record2')
+        if (img) {
+            img.classList.remove('record')
+            img.classList.add('record2')
 
-        img.classList.remove('push')
-        img.classList.add('pull')
+            img.classList.remove('push')
+            img.classList.add('pull')
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(img)
+                }, 2000)
+            })
+        }
+
     }
 
-    function out(obj) {
+    async function out() {
         const img = document.getElementsByClassName('record2')[0]
         img.classList.remove('pull')
         img.classList.add('push')
 
         img.classList.remove('record2')
         img.classList.add('record')
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve(img)
+            }, 1000)
+        })
     }
 
     function addItem(nameList, name, ignoreClass) {
         const item = document.createElement('div')
-        if(!ignoreClass) {
+        if (!ignoreClass) {
             item.classList.add('item')
         }
         item.innerText = name
@@ -81,30 +93,85 @@
         })
     }
 
+    async function showLuckyName() {
+        const div = document.createElement('div')
+
+        const mainContainer = document.getElementsByClassName('main-container')[0]
+        // const left = `calc(50% - ${name.length * 10 / 2}px)`
+        // div.style.left = left
+        div.classList.add('lucky-name')
+        div.innerHTML = '<img src="./images/round.png">'
+        // <div class="name" style="left: ${left}">${name}</div>`
+        mainContainer.append(div)
+
+        return new Promise(resolve => {
+            setTimeout(() => {
+                // mainContainer.removeChild(div)
+                resolve(div)
+            }, 1000)
+        })
+    }
+    
+    async function sleep(time) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(500)
+            }, time)
+        })
+    }
+
+    const names = ['Ang Yao1', 'Dish Smith2', 'Tomas Bevid3', 'Ang Yao4', 'Dish Smith5', 'Tomas Bevid6', 'Ang Yao7', 'Dish Smith8', 'Tomas Bevid9', 'Ang Yao10', 'Dish Smith11', 'Tomas Bevid12']
+    const animationDeplay = 1000
+    const nameList = document.getElementsByClassName('name-list')[0]
+
     async function start(obj) {
         obj.setAttribute('disabled', '')
-        const animationDeplay = 1000
-        const nameList = document.getElementsByClassName('name-list')[0]
-        nameList.innerHTML = ''
-        const names = ['Ang Yao1', 'Dish Smith2', 'Tomas Bevid3', 'Ang Yao4', 'Dish Smith5', 'Tomas Bevid6', 'Ang Yao7', 'Dish Smith8', 'Tomas Bevid9', 'Ang Yao10', 'Dish Smith11', 'Tomas Bevid12']
-        const length = names.length
-        const rnd = Math.floor(Math.random() * names.length)
-        console.log('lng=', length, ', rnd=', rnd)
-        let index = 0
-        for (let index = 0; index < length; index++) {
-            if (rnd === index) {
-                continue
-            }
-            const name = names[index]
-            await getOne(nameList, name)
+        const sourceRecord = await hover()
+        if(sourceRecord) {
+            await showLuckyName()
+            await sleep(500)
         }
-        const name = names[rnd]
-        await getOne(nameList, name, rnd)
 
-        setTimeout(() => {
-            addItem(nameList, name, true)
-        }, 700)
-        obj.removeAttribute('disabled')
+        const length = names.length
+        nameList.innerHTML = ''
+        if (length < 1) {
+            return
+        }
+        try {
+            const rnd = Math.floor(Math.random() * names.length)
+            const luckyName = names[rnd]
+            showLuckyName()
+
+            let index = 0
+            for (let index = 0; index < length; index++) {
+                if (rnd === index) {
+                    continue
+                }
+                const name = names[index]
+                await getOne(nameList, name)
+            }
+            names.splice(rnd, 1)
+            await getOne(nameList, luckyName, rnd)
+            addItem(nameList, luckyName)
+
+            setTimeout(() => {
+                const luckyNameContainers = document.getElementsByClassName('lucky-name')
+                const luckyNameContainer = document.getElementsByClassName('lucky-name')[luckyNameContainers.length - 1]
+                const luckyNameDiv = document.createElement('div')
+                luckyNameDiv.classList.add('name')
+                const left = `calc(50% - ${luckyName.length * 10 / 2}px)`
+                luckyNameDiv.innerText = luckyName
+                luckyNameDiv.style.left = left
+                luckyNameContainer.append(luckyNameDiv)
+
+                const member = document.createElement('div')
+                member.innerText = luckyName
+                document.getElementsByClassName('result')[0].append(member)
+                obj.removeAttribute('disabled')
+            }, 700)
+        } catch {
+            obj.removeAttribute('disabled')
+        }
     }
 </script>
 

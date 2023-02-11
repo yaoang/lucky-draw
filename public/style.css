@@ -1,21 +1,20 @@
-@media only screen and (max-width: 1080px) {
+@media only screen and (max-width: 1500px) {
     .main-container {
         width: 62%;
         left: calc(50% - 62% / 2);
-        /* top: calc(50% - 62% / 2); */
     }
 }
 
-@media screen and (min-width: 1080px) {
+@media screen and (min-width: 1500px) {
     .main-container {
         width: 40%;
         left: calc(50% - 40% / 2);
-        /* top: calc(50% - 62% / 2); */
     }
 }
 
 body {
     background-color: rgba(29, 29, 29, 0.94);
+    /* background-color: #eee; */
     height: 100%;
     width: 100%;
     color: #fff;
@@ -35,13 +34,14 @@ body {
     margin: auto;
     /* display: flex; */
     position: absolute;
-    
+    min-width: 823px;
+    min-height: 500px;
 }
 
 .main-container .title {
     color: #e3c5bb;
     font-size: 2.5em;
-    margin-top: 10%;
+    margin-top: 5%;
     margin-left: 5%;
 }
 
@@ -54,6 +54,7 @@ body {
 
 .main-container .button {
     display: inline;
+    z-index: 10;
 }
 
 .main-container .button button {
@@ -67,6 +68,7 @@ body {
     padding: 0.478em;
     color: #e3c5bb;
     cursor: pointer;
+    z-index: 10;
 }
 
 .main-container .button button:hover {
@@ -90,11 +92,25 @@ body {
     to {
         bottom: 5.4em;
         right: -9.7em;
+        opacity: 0;
+    }
+
+    80% {
+        opacity: 0.8;
+    }
+
+    85% {
+        opacity: 0.5;
+    }
+
+    90% {
+        opacity: 0.3;
     }
 
     from {
         bottom: 2.7em;
         right: -5em;
+        opacity: 1;
     }
 }
 
@@ -124,11 +140,12 @@ body {
     bottom: 5.4em;
     right: -9.7em;
     z-index: 3;
+    opacity: 0;
 }
 
 .record2.pull {
     animation-name: pull-record;
-    animation-duration: 3s;
+    animation-duration: 2s;
 }
 
 .record.push {
@@ -152,6 +169,7 @@ body {
     height: 10em;
     position: relative;
     overflow: hidden;
+    z-index: 3;
 }
 
 @keyframes name-smoth {
@@ -183,4 +201,55 @@ body {
     opacity: 0;
     animation-name: name-smoth;
     animation-duration: 1s;
+}
+
+.lucky-name {
+    width: 19em;
+    position: absolute;
+    top: 30%;
+    left: calc(50% - 9.5em);
+    animation-name: round-animation;
+    animation-duration: 1s;
+}
+
+@keyframes round-animation {
+    from {
+        transform: rotate(-360deg);
+        opacity: .1;
+        /* width: 5%;
+        top: calc(50% - 5% / 2);
+        left: calc(50% - 5% / 2); */
+    }
+    to {
+        opacity: 1;
+        /* width: 40%;
+        top: calc(50% - 40% / 2);
+        left: calc(50% - 40% / 2); */
+    }
+}
+
+@keyframes text-animation {
+    from {
+        font-size: 1%;
+        opacity: .1;
+    }
+}
+
+.lucky-name img {
+    width: 100%;
+}
+
+.lucky-name .name {
+    position: absolute;
+    top: 75%;
+    /* animation-name: text-animation;
+    animation-duration: 1s; */
+    opacity: .8;
+    font-size: 20px;
+}
+
+.result {
+    position: absolute;
+    top: 0.5em;
+    left: 0.5em;
 }
