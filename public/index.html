@@ -40,6 +40,9 @@
             <img src="./images/round.png">
             <div class="name">Ang Yao</div>
         </div> -->
+        <!-- <div class="player">
+            <img src="./images/player.png" alt="" srcset="">
+        </div> -->
     </div>
 </body>
 <script>
@@ -110,6 +113,14 @@
             }, 1000)
         })
     }
+
+    async function showPlayer() {
+        const div = document.createElement('div')
+        const mainContainer = document.getElementsByClassName('main-container')[0]
+        div.classList.add('player')
+        div.innerHTML = '<img src="./images/player.png" srcset="">'
+        mainContainer.append(div)
+    }
     
     async function sleep(time) {
         return new Promise(resolve => {
@@ -127,7 +138,9 @@
         obj.setAttribute('disabled', '')
         const sourceRecord = await hover()
         if(sourceRecord) {
+            console.log('The first time to show running record')
             await showLuckyName()
+            showPlayer()
             await sleep(500)
         }
 
