@@ -19,3 +19,14 @@ const names = [
 { "staffID": "99881243", "name": "Hello84" }, { "staffID": "99979855", "name": "Hello85" }, { "staffID": "99978534", "name": "Hello86" }, { "staffID": "99117352", "name": "Hello87" }, { "staffID": "99010051", "name": "Hello88" },
 { "staffID": "99454725", "name": "Hello89" }, { "staffID": "99111126", "name": "Hello90" }, { "staffID": "99181875", "name": "Hello91" }
 ]
+
+const shuffle = (arr) => {
+    for (let i = 1; i < arr.length; i++) {
+        const random = Math.floor(Math.random() * (i + 1))
+        // [arr[i], arr[random]] = [arr[random], arr[i]]
+        const tmp = arr[i]
+        arr[i] = arr[random]
+        arr[random] = tmp
+    }
+    return arr
+}
