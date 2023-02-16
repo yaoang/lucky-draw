@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" charset="UTF-8">
     <title>Awesome Lucky Draw Version 2.0</title>
     <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
 </head>
 
 <body>
@@ -15,7 +16,7 @@
                 2023 T&D<br />
                 New Year Lucky Draw
             </div>
-            <div class="desc">2023 Transation and ditital new year luck draw</div>
+            <div class="desc">2023 Transformation & Digital new year luck draw</div>
             <div class="button">
                 <button onclick="start(this)">
                     Run Lucky draw
@@ -91,7 +92,7 @@
             setTimeout(() => {
                 addItem(nameList, name)
                 resolve(name)
-            }, 100)
+            }, 50)
         })
     }
 
@@ -125,14 +126,14 @@
     async function sleep(time) {
         return new Promise(resolve => {
             setTimeout(() => {
-                resolve(500)
+                resolve(true)
             }, time)
         })
     }
 
-    const names = ['Ang Yao1', 'Dish Smith2', 'Tomas Bevid3', 'Ang Yao4', 'Dish Smith5', 'Tomas Bevid6', 'Ang Yao7', 'Dish Smith8', 'Tomas Bevid9', 'Ang Yao10', 'Dish Smith11', 'Tomas Bevid12']
     const animationDeplay = 1000
     const nameList = document.getElementsByClassName('name-list')[0]
+    let totalCount = 0
 
     async function start(obj) {
         obj.setAttribute('disabled', '')
@@ -151,7 +152,7 @@
         }
         try {
             const rnd = Math.floor(Math.random() * names.length)
-            const luckyName = names[rnd]
+            const luckyName = names[rnd].name
             showLuckyName()
 
             let index = 0
@@ -159,7 +160,7 @@
                 if (rnd === index) {
                     continue
                 }
-                const name = names[index]
+                const name = names[index].name
                 await getOne(nameList, name)
             }
             names.splice(rnd, 1)
@@ -171,16 +172,17 @@
                 const luckyNameContainer = document.getElementsByClassName('lucky-name')[luckyNameContainers.length - 1]
                 const luckyNameDiv = document.createElement('div')
                 luckyNameDiv.classList.add('name')
-                const left = `calc(50% - ${luckyName.length * 10 / 2}px)`
+                const left = `calc(50% - ${luckyName.length * 12 / 2}px)`
                 luckyNameDiv.innerText = luckyName
                 luckyNameDiv.style.left = left
                 luckyNameContainer.append(luckyNameDiv)
 
                 const member = document.createElement('div')
-                member.innerText = luckyName
+                totalCount ++
+                member.innerText = `${totalCount}. ${luckyName}`
                 document.getElementsByClassName('result')[0].append(member)
                 obj.removeAttribute('disabled')
-            }, 700)
+            }, 500)
         } catch {
             obj.removeAttribute('disabled')
         }
