@@ -200,7 +200,7 @@ body {
     position: absolute;
     opacity: 0;
     animation-name: name-smoth;
-    animation-duration: 1s;
+    animation-duration: .3s;
 }
 
 .lucky-name {
@@ -209,7 +209,7 @@ body {
     top: 30%;
     left: calc(50% - 9.5em);
     animation-name: round-animation;
-    animation-duration: 1s;
+    animation-duration: 5s;
 }
 
 .lucky-name .name {
@@ -243,11 +243,20 @@ body {
 
 @keyframes round-animation {
     from {
-        transform: rotate(-360deg);
+        transform: rotate(-1800deg);
         opacity: .1;
         /* width: 5%;
         top: calc(50% - 5% / 2);
         left: calc(50% - 5% / 2); */
+    }
+    10% {
+        opacity: .5;
+    }
+    20% {
+        opacity: .9;
+    }
+    30% {
+        opacity: 1;
     }
     to {
         opacity: 1;
@@ -274,11 +283,12 @@ body {
     /* animation-name: text-animation;
     animation-duration: 1s; */
     opacity: .8;
-    font-size: 20px;
+    font-size: 25px;
 }
 
 .result {
     position: absolute;
     top: 0.5em;
     left: 0.5em;
+    font-size: 2em;
 }
