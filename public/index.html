@@ -186,6 +186,7 @@
     async function randomAndSetName() {
         showLuckyRecord()
 
+        names = shuffle(names)
         const length = names.length
         let rnd = -1
         for (let index = 0; index < length; index++) {
@@ -252,6 +253,8 @@
             window.isRunning = false
         }
     }
+    
+    window.onload = function () { document.getElementById('runDraw').focus() }
 </script>
 
 </html>
