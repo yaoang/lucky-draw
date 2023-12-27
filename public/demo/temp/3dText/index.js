@@ -1,6 +1,7 @@
 'use strict';
 
 function loadTexts(KEYMAP) {
+	/// <summary>Reads a text file and returns the text as a string.</summary>
 	var key_els = {};
 
 	var rand = function rand() {

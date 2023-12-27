@@ -1,4 +1,4 @@
-const names = [
+var names = [
     { "staffID": "99129686", "name": "Hello1" }, { "staffID": "99284077", "name": "Hello2" }, { "staffID": "99166837", "name": "Hello3" },
 { "staffID": "99659947", "name": "Hello4" }, { "staffID": "99219526", "name": "Hello5" }, { "staffID": "99255091", "name": "Hello6" }, { "staffID": "99116284", "name": "Hello7" }, { "staffID": "99699349", "name": "Hello8" },
 { "staffID": "99116222", "name": "Hello9" }, { "staffID": "99116216", "name": "Hello10" }, { "staffID": "99007154", "name": "Hello11" }, { "staffID": "99983378", "name": "Hello12" }, { "staffID": "99794002", "name": "Hello13" },

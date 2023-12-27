@@ -75,6 +75,11 @@ body {
     opacity: .7;
 }
 
+.main-container .button button:focus {
+    border: 1px solid #e3c5bb;
+    outline: none;
+}
+
 .record-package {
     width: 23em;
     position: absolute;
