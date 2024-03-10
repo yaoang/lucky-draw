@@ -79,7 +79,6 @@
     <script>
         window.drawType = ''
         async function setDrawType(drawType) {
-            console.log(`new drawtype = ${drawType}`)
             const res = await fetch('/setDrawType', {
                 method: 'POST',
                 headers: {
@@ -90,7 +89,7 @@
             window.drawType = drawType
             const data = await res.json()
             const { drawType: dt } = data
-            console.log(`dt=${JSON.stringify(dt)}`)
+            console.log(dt)
             document.getElementById('numWinners').value = dt.count
         }
 

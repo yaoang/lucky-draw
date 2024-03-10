@@ -1,0 +1,12 @@
+{
+  "name": "luck-draw",
+  "version": "1.0.0",
+  "description": "Mss Luck Draw 2024",
+  "main": "index.js",
+  "scripts": {
+    "copy": "cd src && cp -rf * ../server/static && cd ..",
+    "start": "cd server && node server.mjs"
+  },
+  "author": "Ang Yao",
+  "license": "ISC"
+}

@@ -1,0 +1,107 @@
+@keyframes shake {
+    0% {
+      transform: translateX(0);
+    }
+    10% {
+      transform: translateX(-5px) rotate(-3deg);
+    }
+    20% {
+      transform: translateX(5px) rotate(3deg);
+    }
+    30% {
+      transform: translateX(-5px) rotate(-3deg);
+    }
+    40% {
+      transform: translateX(5px) rotate(3deg);
+    }
+    50% {
+      transform: translateX(0);
+    }
+    60% {
+      transform: translateX(-5px) rotate(3deg);
+    }
+    70% {
+      transform: translateX(5px) rotate(-3deg);
+    }
+    80% {
+      transform: translateX(-5px) rotate(3deg);
+    }
+    90% {
+      transform: translateX(5px) rotate(-3deg);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
+  /* 应用动画 */
+  .long img {
+    animation: shake 10s infinite;
+  }
+
+
+
+
+  .small_cloud {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    width: 100px;
+    height: 100px;
+    animation: float 5s linear infinite;
+  }
+  
+  @keyframes float {
+    0% {
+      right: 1%;
+      opacity: 0;
+      top: 15%;
+      scale: 0.9;
+    }
+
+    10% {
+        top: 20%;
+        scale: 1;
+    }
+
+    50% {
+        opacity: 1;
+        top: 15%;
+        scale: 0.7;
+    }
+
+    75% {
+        top: 20%;
+        scale: 0.5;
+    }
+    
+    100% {
+      right: 40vw;
+      opacity: 0;
+      top: 15%;
+      scale: 0.3;
+    }
+  }
+
+
+  .prize {
+    animation: shake 2.5s linear infinite;
+  }
+  
+  @keyframes shake {
+    0% {
+      transform: translateX(0) translateY(0);
+    }
+    25% {
+      transform: translateX(-2px) translateY(-5px) rotate(-1deg);
+    }
+    50% {
+      transform: translateX(2px) translateY(5px) rotate(1deg);
+    }
+    75% {
+      transform: translateX(-2px) translateY(5px) rotate(-1deg);
+    }
+    95% {
+      transform: translateX(0) translateY(0);
+    }
+  }

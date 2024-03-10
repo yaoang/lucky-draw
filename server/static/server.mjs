@@ -33,7 +33,7 @@ app.get('/allDrawTypes', function (req, res) {
 app.post('/setDrawType', (req, res) => {
     const { drawType: dt } = req.body
 
-    console.log('new drawType = ' + dt)
+    console.log('drawType = ' + drawType)
     drawType = dt
     return res.json({result:'success', drawType: getGift(dt)})
 })
@@ -62,7 +62,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
 // Draw logic
 app.get('/draw', (req, res) => {
-    return drawWinners(req, res, drawType !== 'ygpz')
+    drawWinners(req, res)
 })
 
 // current draw type object
@@ -79,7 +79,7 @@ app.post('/updateDrawCount', (req, res) => {
 
 // Draw logic without excluding winners
 app.get('/drawWithoutExclude', (req, res) => {
-    return drawWinners(req, res, false)
+    drawWinners(req, res, false)
 })
 
 // get all employees
@@ -140,7 +140,7 @@ function drawWinners(req, res, isExlucde = true) {
     drawResults.push(drawResult)
     fs.writeFileSync('draw.json', JSON.stringify(drawResults, null, 2))
 
-    return res.json(randomWinners)
+    res.json({ success: true, winners: randomWinners })
 }
 
 // Query winning results

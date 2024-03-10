@@ -16,8 +16,8 @@ canvas.height = canvas2.height = ch;
 
 canvas.fillStyle = 'rgb(213, 38, 29)'
 
-let totalCount = 6
-let drawTimeMillis = totalCount > 5 ? 500 : (totalCount < 3 ? 1500 : 1000)
+const totalCount = 6
+const drawTimeMillis = totalCount > 5 ? 500 : (totalCount < 3 ? 1500 : 1000)
 
 let employeeId = ''
 window.prizeName = '京东500元购物卡'
@@ -78,12 +78,11 @@ var update = function () {
 
     employeeId = generateEmployeeId()
 
-    var i = fallingCharArr.length
+    var i = fallingCharArr.length;
     while (i--) {
         fallingCharArr[i].value = employeeId[i]
-        // console.log(i, employeeId[i], fallingCharArr[i].value)
         fallingCharArr[i].draw(ctx);
-        // var v = fallingCharArr[i];
+        var v = fallingCharArr[i];
     }
 
     animationNum = requestAnimationFrame(update);
@@ -101,11 +100,10 @@ function sleep(ms) {
 
 let index = 0
 async function drawWinner() {
-    // ouputWinner(fallingCharArr.map(fcr => fcr.value).join(''), index, totalCount)
-    ouputWinner(window.drawResults[index].id, index, totalCount)
+    ouputWinner(fallingCharArr.map(fcr => fcr.value).join(''), index, totalCount)
     index++
 
-    // await sleep(250)
+    await sleep(250)
     document.querySelector('#lucky-draw').removeAttribute('disabled')
 
 }
@@ -124,7 +122,6 @@ async function startToRunDraw(prizeName) {
             startToRunDraw()
             // animationNum = requestAnimationFrame(update);
         } else {
-            console.log('done')
             cancelAnimationFrame(animationNum)
 
             saveWinners(window.prizeName)
@@ -132,24 +129,25 @@ async function startToRunDraw(prizeName) {
     }, drawTimeMillis)
 }
 
-window.drawResults = []
-async function getDrawResult() {
-    const res = await fetch('/draw')
-    const results = await res.json()
-    window.drawResults = results
-}
-
-async function initAndDraw() {
+function initAndDraw() {
     index = 0
     document.querySelector('.winners').innerHTML = ''
     ctx.clearRect(0, 0, cw, ch)
     ctx2.clearRect(0, 0, cw, ch)
 
-    // document.getElementById('winners').style.fontSize = `40px`
-    // const top = document.getElementById('img-production').clientHeight/2 - (totalCount * 80 ) / 2
+    // fallingCharArr = []
+    // for (var i = 0; i < maxColums; i++) {
+    //     fallingCharArr.push(new Point(i * fontSize, randomFloat(-500, 0)));
+    // }
+    
+    //document.getElementById('img-production').clientHeight
+    document.getElementById('winners').style.fontSize = `40px`
+    const top = document.getElementById('img-production').clientHeight/2 - (totalCount * 80 ) / 2
+    // const top = (totalCount * 50) / 2
+    // document.getElementById('winners').style.top = `calc(8vh + ${top}px)`
+    // document.getElementById('winners').style.top = '8vh'
 
     update()
-    await getDrawResult()
     startToRunDraw(prizeName)
 }
 
@@ -158,43 +156,33 @@ async function initAndDraw() {
  * @returns 
  */
 function generateEmployeeId() {
-    // const prefix = "4";
-    // const suffixLength = 7;
-    // const digits = "0123456789";
+    const prefix = "4";
+    const suffixLength = 7;
+    const digits = "0123456789";
 
-    // let employeeId = "";
-    // for (let i = 0; i < suffixLength; i++) {
-    //     employeeId += digits[Math.floor(Math.random() * digits.length)];
-    // }
+    let employeeId = "";
+    for (let i = 0; i < suffixLength; i++) {
+        employeeId += digits[Math.floor(Math.random() * digits.length)];
+    }
 
-    // return prefix + employeeId;
-
-    const lng = window.employees.length
-    const rand = Math.floor(Math.random() * lng)
-    // console.log(window.employees, rand, window.employees[rand])
-    const id = window.employees[rand].id
-    // console.log(id)
-    return id.toString()
+    return prefix + employeeId;
 }
 
-
-window.employees = []
 /**
- * get all employees
+ * 随机生成若干个employeeId
+ * @param {number of employeeIds} count 
  * @returns 
  */
-async function generateEmployees() {
-    const res = await fetch('/employees')
-    const es = await res.json()
+function generateEmployees(count) {
+    const employees = [];
+    for (let i = 0; i < count; i++) {
+        employees.push(generateEmployeeId());
+    }
 
-    window.employees = es
-
-    // return employees
-
+    return employees;
 }
 
-generateEmployees()
-// console.log(window.employees)
+const employees = generateEmployees(1000)
 
 // update();
 // startToRunDraw();
@@ -202,17 +190,14 @@ generateEmployees()
 
 
 
-async function updateDrawType() {
-    const res = await fetch('/current')
-    const drawType = await res.json()
-    // console.log(drawType)
 
-    const {count, img, name} = drawType
-    window.prizeName = name
-    document.getElementById('draw-name').innerText = name
-    document.getElementById('img-production').src = `./productions/${img}`
-    totalCount = count
-    drawTimeMillis = totalCount > 5 ? 500 : (totalCount < 3 ? 1500 : 1000)
+
+
+
+async function updateDrawType() {
+    const res = fetch('/current')
+    const drawType = await res.json()
+    console.log(drawType)
 }
 
-setInterval(updateDrawType, 10000)
+// setInterval(updateDrawType, 1000)

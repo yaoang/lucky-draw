@@ -1,7 +1,7 @@
 export const GIFTS = {
     'ygpz': {
         name: '100元购物卡',
-        count: 10,
+        count: 20,
         img: 'gouwuka.png'
     },
     'jdcard': {
@@ -17,7 +17,7 @@ export const GIFTS = {
     'huawei': {
         name: '华为手机',
         count: 2,
-        img: 'huawei.png'
+        img: 'huaweishouji.png'
     },
     'macBookPro': {
         name: 'Mac Book Pro',
