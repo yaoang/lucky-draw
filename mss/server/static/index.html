@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Draw 2024 Manager</title>
+    <style>
+        .item {
+            margin-bottom: 15px;
+        }
+
+        a {
+            cursor: pointer;
+            color: blue;
+            font-weight: bold;
+            text-decoration: none;
+            border: 1px solid black;
+            padding: 5px;
+        }
+
+        #information {
+            margin-bottom: 15px;
+        }
+
+        #drawTypes {
+            margin-top: 30px;
+        }
+
+        #drawType,
+        #drawCount {
+            margin-bottom: 15px;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: transparent;
+            margin-right: 5px;
+            border: 1px solid;
+            padding: 5px;
+        }
+
+        button:hover {
+            background-color: black;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Lucky Draw 2024 Manager</h1>
+    <div class="item">
+        <input type="file" id="fileInput">
+        <button onclick="uploadFile()">Upload Employees File</button>
+    </div>
+
+    <div id="information" style="color: blue; "></div>
+
+    <div class="item">
+        <label for="numWinners">Number of Winners:</label>
+        <input type="number" id="numWinners" value="1" min="1" max="30">
+        <button onclick="updateDrawCount()">Save</button>
+    </div>
+    <div>
+        <a href="/employees" target="_blank" title="employees">Employees(<span class="employee-num">0</span>)</a>
+        <!-- <a href="javascript:void(0)" onclick="drawWinners()" title="Draw">Draw</a> -->
+        <!-- <a href="javascript:void(0)" onclick="drawWinnersWithoutExlucde()" title="阳光普照">Draw 阳光普照</a> -->
+        <a href="/result" target="_blank" title="Check draw result">Result</a>
+    </div>
+
+    <div id="drawTypes">
+        <div>Current draw Type: <span id="drawType"></span></div>
+        <div>Current draw count: <span id="drawCount"></span></div>
+    </div>
+    <div id="winners"></div>
+
+    <div id="error" style="color: red; display: none;"></div>
+
+    <script>
+        window.drawType = ''
+        async function setDrawType(drawType) {
+            const res = await fetch('/setDrawType', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({ drawType })
+            })
+            window.drawType = drawType
+            const data = await res.json()
+            const { drawType: dt } = data
+            console.log(dt)
+            document.getElementById('numWinners').value = dt.count
+        }
+
+        async function updateDrawCount() {
+            const count = document.getElementById('numWinners').value
+            const res = await fetch('/updateDrawCount', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({ count })
+            })
+            const dt = await res.json()
+            window.drawTypes[window.drawType].count = count
+            document.getElementById('drawCount').innerText = count
+        }
+
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileInput')
+            const numWinnersInput = document.getElementById('numWinners');
+            const file = fileInput.files[0];
+            const numWinners = numWinnersInput.value;
+
+            const errorDiv = document.getElementById('error');
+            errorDiv.style.display = 'none'; // 
+
+            if (!file) {
+                errorDiv.textContent = 'No file selected.';
+                errorDiv.style.display = 'block'; // 
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json()
+                fileInput.value = ''
+
+                document.getElementById('information').innerHTML = `File uploaded successfully, got employees: ${data.data.length}`;
+
+                document.querySelector('.employee-num').innerText = data.data.length
+            } catch (error) {
+                console.error('Error uploading file:', error);
+                errorDiv.textContent = 'Error uploading file.';
+                errorDiv.style.display = 'block'; //
+            }
+        }
+
+        async function drawWinners() {
+            const errorDiv = document.getElementById('error');
+            errorDiv.style.display = 'none'; //
+
+            try {
+                const response = await fetch(`/draw`)
+                const data = await response.json()
+                displayWinners(data.winners)
+            } catch (error) {
+                console.error('Error drawing winners:', error);
+                errorDiv.textContent = 'Error drawing winners.';
+                errorDiv.style.display = 'block'; //
+            }
+        }
+
+        async function drawWinnersWithoutExlucde() {
+            const errorDiv = document.getElementById('error');
+            errorDiv.style.display = 'none';
+
+            try {
+                await setDrawType('ygpz')
+
+                const response = await fetch(`/drawWithoutExclude`)
+                const data = await response.json()
+                displayWinners(data.winners)
+            } catch (error) {
+                console.error('Error drawing winners:', error);
+                errorDiv.textContent = 'Error drawing winners.';
+                errorDiv.style.display = 'block';
+            }
+        }
+
+        function displayWinners(winners) {
+            const winnersDiv = document.getElementById('winners');
+            winnersDiv.innerHTML = '';
+
+            if (winners.length === 0) {
+                const errorDiv = document.getElementById('error');
+                errorDiv.textContent = 'No winners';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            const ul = document.createElement('ul')
+            let index = 1
+            winners.forEach(winner => {
+                const li = document.createElement('li');
+                li.textContent = `${index++} -> ID: ${winner.id}`;
+                ul.appendChild(li);
+            });
+            winnersDiv.appendChild(ul);
+        }
+
+        window.drawTypes = {}
+        async function getAllDrawTypes() {
+            const response = await fetch('/allDrawTypes')
+            const data = await response.json()
+            window.drawTypes = data
+            const drawTypesData = document.getElementById('drawTypes')
+            Object.keys(window.drawTypes).forEach(key => {
+                const dt = window.drawTypes[key]
+                const button = document.createElement('button')
+                button.classList.add('btn-primary')
+                button.onclick = () => {
+                    setDrawType(key)
+                    document.getElementById('drawType').innerHTML = `${dt.name}(${key})`
+                    document.getElementById('drawCount').innerHTML = dt.count
+                }
+                button.textContent = dt.name
+                drawTypesData.appendChild(button)
+            })
+
+            document.querySelector('.btn-primary').click()
+        }
+
+        getAllDrawTypes()
+    </script>
+</body>
+
+</html>

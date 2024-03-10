@@ -1,0 +1,185 @@
+    <html>
+
+    <head>
+        <title>HTML5 Canvas Matrix Effect</title>
+        <style>
+            body {
+                margin: 0;
+                background-color: #3c3c3c;
+
+                height: 100%;
+                width: 100%;
+                /* border: 5px solid gray; */
+                overflow: hidden;
+                /* display: flex; */
+            }
+
+            .maincontainer {
+                position: relative;
+                /* put this div in the center of body */
+                /* width: 50%; */
+                height: 100vh;
+                /* padding-top: 25vh; */
+                margin: auto auto;
+                /* overflow: auto; */
+
+                border: 1px solid gray;
+            }
+
+            .maincontainer img.bg {
+                width: 100%;
+                height: 100%;
+            }
+
+            .maincontainer div.long {
+                position: absolute;
+                bottom: 0;
+                left: 2%;
+                height: 90%;
+                /* cursor: pointer; */
+            }
+
+            button {
+                cursor: pointer;
+                text-decoration: none;
+                border: none;
+                background-color: transparent;
+                height: 100%;
+            }
+
+            button:disabled {
+                cursor: not-allowed;
+            }
+
+            button:focus {
+                border: none !important;
+                outline: none !important;
+            }
+
+            .maincontainer div.long img {
+                height: 100%;
+            }
+
+            .maincontainer div.cloud {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+            }
+
+            .maincontainer div.cloud img {
+                width: 100%;
+            }
+
+            .maincontainer div.small_cloud {
+                position: absolute;
+                top: 20%;
+                right: 30%;
+            }
+
+            .maincontainer div.small_cloud img {
+
+                width: 170px;
+            }
+
+            /* .maincontainer div.small_cloud img {
+                width: 100%;
+            } */
+
+            canvas {
+                /* display: block; */
+                position: absolute;
+                top: 0;
+                left: 25%;
+                width: 70vw;
+                height: 75vh;
+                /* background-color: rgb(213, 38, 29); */
+            }
+
+            #information {
+                position: absolute;
+                top: 10px;
+                left: 50%;
+            }
+
+            .production {
+                position: absolute;
+                top: 10px;
+                left: 35%;
+                width: 60vw;
+
+                /* overflow: hidden; */
+
+                /* height: 100%; */
+                /* border: 2px solid white; */
+            }
+
+            .production .draw-result {
+                position: relative;
+                /* border: 2px solid white; */
+            }
+
+            .production img {
+                opacity: .62;
+                max-height: 70vh;
+                /* width: 100%; */
+                border-radius: 10px;
+                margin-top: 8vh;
+            }
+
+            .production .winners {
+                /* position: absolute; */
+                /* top: calc(8vh + 50px);
+                left: calc(50% - 40px * 4); */
+                /* margin-top: 50px; */
+                margin-top: 8vh;
+            }
+
+            .production .winners .employeeid {
+                margin: 10px 25%;
+                color: rgb(255, 255, 255);
+                /* height: 25px; */
+                font-size: 30px;
+                font-weight: bold;
+            }
+        </style>
+        <link rel="stylesheet" href="./style.css" type="text/css" />
+    </head>
+
+    <body>
+        <div class="maincontainer">
+            <img src="./bg.png" class="bg" />
+            <div class="long">
+                <button onclick="initAndDraw()" title="Click to start lucky draw" id="lucky-draw">
+                    <img src="./long.png" />
+                </button>
+            </div>
+            <div class="cloud">
+                <img src="./cloud.png" />
+            </div>
+
+            <div class="small_cloud">
+                <img src="./small_cloud.png" />
+            </div>
+
+            <div class="production">
+                <div class="draw-result" style="display: flex;">
+                    <div class="winners" id="winners" style="flex: 1;"></div>
+                    <div style="flex: 2;">
+                        <!-- <img src="./productions/changbaxiaojudang.jpg" id="img-production" class="prize" /> -->
+                        <img src="./productions/jingdong500yuan.png" id="img-production" class="prize" alt="京东500元购物卡" />
+                        <div style="opacity: .7; font-weight: bold; color: #fff; margin-left: 15px;">京东500元购物卡</div>
+                    </div>
+                </div>
+            </div>
+
+            <canvas id="canvas">Canvas is not supported in your browser.</canvas>
+            <canvas id="canvas2">Canvas is not supported in your browser.</canvas>
+            <div id="information"></div>
+        </div>
+    </body>
+
+    <script src="./script.js">
+    </script>
+
+    </html>
