@@ -69,3 +69,4 @@ function saveTableNo() {
     const tableNo = document.querySelector('.table-no').innerText
     localStorage.setItem('tableNo', JSON.stringify({ tableNo }))
 }
+// end table draw

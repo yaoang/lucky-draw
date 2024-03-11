@@ -20,7 +20,8 @@ let totalCount = 6
 let drawTimeMillis = totalCount > 5 ? 500 : (totalCount < 3 ? 1500 : 1000)
 
 let employeeId = ''
-window.prizeName = '京东500元购物卡'
+window.prizeName = ''
+window.drawType = ''
 
 
 function randomInt(min, max) {
@@ -140,6 +141,11 @@ async function getDrawResult() {
 }
 
 async function initAndDraw() {
+
+    if(window.drawType === 'ygpz') {
+        return startToRndTableNo()
+    }
+
     index = 0
     document.querySelector('.winners').innerHTML = ''
     ctx.clearRect(0, 0, cw, ch)
@@ -207,15 +213,72 @@ async function updateDrawType() {
     const drawType = await res.json()
     // console.log(drawType)
 
-    const { count, img, name } = drawType
+    const { count, img, name, drawType: dt } = drawType
     if (window.prizeName !== name) {
         window.prizeName = name
+        window.drawType = dt
         document.getElementById('draw-name').innerText = name
         document.getElementById('img-production').src = `./productions/${img}`
         totalCount = count
         drawTimeMillis = totalCount > 5 ? 500 : (totalCount < 3 ? 1500 : 1000)
         document.getElementById('winners').innerHTML = ''
+
+        if (dt === 'ygpz') {
+            document.querySelector('.draw-result').style.display = 'none'
+            document.querySelector('.desk').style.display = ''
+        } else {
+            document.querySelector('.draw-result').style.display = 'flex'
+            document.querySelector('.desk').style.display = 'none'
+        }
     }
 }
 
 setInterval(updateDrawType, 1000)
+
+
+
+// for table no random luck draw
+var maxTableNo = 127
+var tableNo = 'TABLE_'
+var tableNoLng = 0
+var rndCount = 0
+function reduceText() {
+    setTimeout(() => {
+        tableNoLng --
+        document.getElementById('table-no').innerText = document.getElementById('table-no').innerText.substr(0, tableNoLng) + '_'
+
+        console.log(document.getElementById('table-no').innerText.length-2, tableNoLng)
+        if(tableNoLng > 'TABLE'.length) {
+            return reduceText()
+        }
+
+        rndTableNo()
+    }, 200)
+}
+
+function startToRndTableNo() {
+    tableNoLng = document.getElementById('table-no').innerText.length - 1
+    // document.getElementById('table-no').innerText = tableNo
+    rndCount = 0
+    reduceText()
+}
+
+function rndTableNo() {
+    setTimeout(() => {
+        const no = (Math.floor(Math.random() * maxTableNo) + 1).toString()
+        document.getElementById('table-no').innerHTML = 'TABLE ' + ('000'.substr(0, 3 - no.length) + no) + ( rndCount % 5 == 1 ? '&nbsp;' : '_')
+
+        rndCount ++
+        if(rndCount < 20) {
+            return rndTableNo()
+        }
+
+        return saveTableNo()
+    }, 100)
+}
+
+function saveTableNo() {
+    const tableNo = document.querySelector('.table-no').innerText
+    localStorage.setItem('tableNo', JSON.stringify({ tableNo }))
+}
+// end table draw

@@ -142,6 +142,26 @@
                 font-size: 30px;
                 font-weight: bold;
             }
+
+            .production .desk {
+                /* margin: auto auto; */
+                font-size: 12vh;
+                color: #fff;
+                text-align: center;
+                margin-top: calc(50vh / 2);
+                line-height: 25vh;
+                vertical-align: bottom;
+                /* border: 1px solid; */
+            }
+
+            .production .desk .table-no {
+                background-color: rgba(240, 10, 10, .4);
+                display: inline-block;
+                border-radius: 20px;
+                width: 39vw;
+                height: 26vh;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+            }
         </style>
         <link rel="stylesheet" href="./style.css" type="text/css" />
     </head>
@@ -150,7 +170,7 @@
         <div class="maincontainer">
             <img src="./bg.png" class="bg" />
             <div class="long">
-                <button onclick="initAndDraw()" title="Click to start lucky draw" id="lucky-draw">
+                <button onclick="startToRndTableNo()" title="Click to start lucky draw" id="lucky-draw">
                     <img src="./long.png" />
                 </button>
             </div>
@@ -162,14 +182,18 @@
                 <img src="./small_cloud.png" />
             </div>
 
-            <div class="production" style="display: none;">
-                <div class="draw-result" style="display: flex;">
+            <div class="production">
+                <div class="draw-result" style="display: none;">
                     <div class="winners" id="winners" style="flex: 1;"></div>
                     <div style="flex: 2;">
                         <!-- <img src="./productions/changbaxiaojudang.jpg" id="img-production" class="prize" /> -->
                         <img src="./productions/jingdong500yuan.png" id="img-production" class="prize" alt="京东500元购物卡" />
                         <div id="draw-name" style="opacity: .7; font-weight: bold; color: #fff; margin-left: 15px;">京东500元购物卡</div>
                     </div>
+                </div>
+
+                <div class="desk">
+                    <div class="table-no" id="table-no">TABLE NO_</div>
                 </div>
             </div>
 
@@ -179,7 +203,7 @@
         </div>
     </body>
 
-    <script src="./script.js">
+    <script src="./desk.js">
     </script>
 
     </html>

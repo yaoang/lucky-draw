@@ -67,7 +67,7 @@ app.get('/draw', (req, res) => {
 
 // current draw type object
 app.get('/current', (req, res) => {
-    return res.json(getGift(drawType))
+    return res.json(Object.assign({ drawType }, getGift(drawType)))
 })
 
 app.post('/updateDrawCount', (req, res) => {
