@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "copy": "cd src && cp -rf * ../server/static && cd ..",
-    "start": "cd server && node server.mjs"
+    "start": "cd server && node server.mjs",
+    "copyAndStart": "npm run copy && npm start"
   },
   "author": "Ang Yao",
   "license": "ISC"

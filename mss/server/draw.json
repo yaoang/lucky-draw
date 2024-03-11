@@ -202,5 +202,132 @@
       45010449
     ],
     "drawType": "jdcard"
+  },
+  {
+    "dateTime": "2024-03-11T14:26:07.756Z",
+    "winners": [
+      45010547,
+      45010937,
+      45010894,
+      45011048
+    ],
+    "drawType": "aiguozhetouyingyi"
+  },
+  {
+    "dateTime": "2024-03-11T14:26:21.260Z",
+    "winners": [
+      45010684,
+      45011133
+    ],
+    "drawType": "switch"
+  },
+  {
+    "dateTime": "2024-03-11T14:28:45.841Z",
+    "winners": [
+      45011124,
+      45011017,
+      45010488,
+      45010308
+    ],
+    "drawType": "aiguozhetouyingyi"
+  },
+  {
+    "dateTime": "2024-03-11T14:29:09.517Z",
+    "winners": [
+      45010300
+    ],
+    "drawType": "dysonchuifengji"
+  },
+  {
+    "dateTime": "2024-03-11T14:29:46.823Z",
+    "winners": [
+      45010075,
+      45010884,
+      45010950,
+      45010802,
+      45010282,
+      45010574
+    ],
+    "drawType": "changbaxiaojudang"
+  },
+  {
+    "dateTime": "2024-03-11T14:31:22.433Z",
+    "winners": [
+      45010396,
+      45010706,
+      45010232,
+      45011131,
+      45010827,
+      45010041
+    ],
+    "drawType": "airpods"
+  },
+  {
+    "dateTime": "2024-03-11T14:31:27.996Z",
+    "winners": [
+      45010913,
+      45010143,
+      45010096,
+      45010948,
+      45010557,
+      45011115
+    ],
+    "drawType": "airpods"
+  },
+  {
+    "dateTime": "2024-03-11T15:19:21.639Z",
+    "winners": [
+      45011172
+    ],
+    "drawType": "dysonchuifengji"
+  },
+  {
+    "dateTime": "2024-03-11T15:19:28.464Z",
+    "winners": [
+      45010028
+    ],
+    "drawType": "jimi"
+  },
+  {
+    "dateTime": "2024-03-11T15:19:35.844Z",
+    "winners": [
+      45010153,
+      45010625
+    ],
+    "drawType": "switch"
+  },
+  {
+    "dateTime": "2024-03-11T15:19:44.221Z",
+    "winners": [
+      45010454
+    ],
+    "drawType": "macbookpro"
+  },
+  {
+    "dateTime": "2024-03-11T15:20:23.979Z",
+    "winners": [
+      45010292
+    ],
+    "drawType": "macbookpro"
+  },
+  {
+    "dateTime": "2024-03-11T15:28:56.289Z",
+    "winners": [
+      45010073,
+      45010255,
+      45010562,
+      45011025
+    ],
+    "drawType": "aiguozhetouyingyi"
+  },
+  {
+    "dateTime": "2024-03-11T15:29:54.262Z",
+    "winners": [
+      45010602,
+      45010638,
+      45010079,
+      45010089
+    ],
+    "drawType": "aiguozhetouyingyi"
   }
 ]

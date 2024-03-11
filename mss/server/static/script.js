@@ -29,7 +29,7 @@ function randomInt(min, max) {
 
 function randomFloat(min, max) {
     const rnd = Math.random() * (max - min) + min
-    
+
     return rnd
 }
 
@@ -112,11 +112,11 @@ async function drawWinner() {
 
 function saveWinners(prizeName) {
     const winners = document.querySelector('.winners').innerText
-    localStorage.setItem('winners', JSON.stringify({[prizeName]: winners}))
+    localStorage.setItem('winners', JSON.stringify({ [prizeName]: winners }))
 }
 
 async function startToRunDraw(prizeName) {
-    document.querySelector('#lucky-draw').setAttribute('disabled','disabled')
+    document.querySelector('#lucky-draw').setAttribute('disabled', 'disabled')
     setTimeout(async () => {
         await drawWinner()
 
@@ -207,12 +207,15 @@ async function updateDrawType() {
     const drawType = await res.json()
     // console.log(drawType)
 
-    const {count, img, name} = drawType
-    window.prizeName = name
-    document.getElementById('draw-name').innerText = name
-    document.getElementById('img-production').src = `./productions/${img}`
-    totalCount = count
-    drawTimeMillis = totalCount > 5 ? 500 : (totalCount < 3 ? 1500 : 1000)
+    const { count, img, name } = drawType
+    if (window.prizeName !== name) {
+        window.prizeName = name
+        document.getElementById('draw-name').innerText = name
+        document.getElementById('img-production').src = `./productions/${img}`
+        totalCount = count
+        drawTimeMillis = totalCount > 5 ? 500 : (totalCount < 3 ? 1500 : 1000)
+        document.getElementById('winners').innerHTML = ''
+    }
 }
 
-setInterval(updateDrawType, 10000)
+setInterval(updateDrawType, 1000)
