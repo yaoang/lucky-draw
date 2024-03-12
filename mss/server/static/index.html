@@ -204,7 +204,16 @@
             const data = await response.json()
             window.drawTypes = data
             const drawTypesData = document.getElementById('drawTypes')
+            let startWith = ''
             Object.keys(window.drawTypes).forEach(key => {
+                if(startWith !== key[0]) {
+                    drawTypesData.appendChild(document.createElement('br'))
+                    startWith = key[0]
+                    const span = document.createElement('span')
+                    span.innerHTML = `${startWith.toUpperCase()}: `
+                    drawTypesData.appendChild(span)
+                }
+
                 const dt = window.drawTypes[key]
                 const button = document.createElement('button')
                 button.classList.add('btn-primary')
