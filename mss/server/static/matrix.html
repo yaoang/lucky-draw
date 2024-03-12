@@ -154,13 +154,18 @@
                 /* border: 1px solid; */
             }
 
-            .production .desk .table-no {
-                background-color: rgba(240, 10, 10, .4);
+            .production .table-no {
+                font-size: 9vh;
+                color: #fff;
+                text-align: center;
+                margin-top: calc(50vh / 2);
+
+                /* background-color: rgba(240, 10, 10, .4); */
                 display: inline-block;
-                border-radius: 20px;
-                width: 39vw;
+                /* border-radius: 20px; */
+                width: 20vw;
                 height: 26vh;
-                border: 1px solid rgba(255, 255, 255, 0.3);
+                /* border: 1px solid rgba(255, 255, 255, 0.3); */
             }
         </style>
         <link rel="stylesheet" href="./style.css" type="text/css" />
@@ -185,15 +190,16 @@
             <div class="production">
                 <div class="draw-result" style="display: flex;">
                     <div class="winners" id="winners" style="flex: 1;"></div>
+                    <div class="table-no" id="table-no" style="display: none;">NO. 000_</div>
                     <div style="flex: 2;">
                         <img src="./productions/jingdong500yuan.png" id="img-production" class="prize" />
                         <div id="draw-name" style="opacity: .7; font-weight: bold; color: #fff; margin-left: 15px;">京东500元购物卡</div>
                     </div>
                 </div>
 
-                <div class="desk" style="display: none;">
+                <!-- <div class="desk" style="display: none;">
                     <div class="table-no" id="table-no">TABLE NO_</div>
-                </div>
+                </div> -->
             </div>
 
             <canvas id="canvas">Canvas is not supported in your browser.</canvas>

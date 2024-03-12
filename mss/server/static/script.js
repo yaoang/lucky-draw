@@ -142,7 +142,7 @@ async function getDrawResult() {
 
 async function initAndDraw() {
 
-    if(window.drawType === 'ygpz') {
+    if(window.drawType === 'ygpz' || window.drawType === 'reshen') {
         return startToRndTableNo()
     }
 
@@ -223,12 +223,12 @@ async function updateDrawType() {
         drawTimeMillis = totalCount > 5 ? 500 : (totalCount < 3 ? 1500 : 1000)
         document.getElementById('winners').innerHTML = ''
 
-        if (dt === 'ygpz') {
-            document.querySelector('.draw-result').style.display = 'none'
-            document.querySelector('.desk').style.display = ''
+        if (dt === 'ygpz' || dt === 'reshen') {
+            document.querySelector('.winners').style.display = 'none'
+            document.querySelector('.table-no').style.display = ''
         } else {
-            document.querySelector('.draw-result').style.display = 'flex'
-            document.querySelector('.desk').style.display = 'none'
+            document.querySelector('.winners').style.display = ''
+            document.querySelector('.table-no').style.display = 'none'
         }
     }
 }
@@ -239,15 +239,18 @@ setInterval(updateDrawType, 1000)
 
 // for table no random luck draw
 var maxTableNo = 127
-var tableNo = 'TABLE_'
+var maxSeatNo = 12
+var tableNo = 'NO. 000_'
 var tableNoLng = 0
 var rndCount = 0
+var seats = []
+var tables = []
 function reduceText() {
     setTimeout(() => {
         tableNoLng --
         document.getElementById('table-no').innerText = document.getElementById('table-no').innerText.substr(0, tableNoLng) + '_'
 
-        console.log(document.getElementById('table-no').innerText.length-2, tableNoLng)
+        // console.log(document.getElementById('table-no').innerText.length-2, tableNoLng)
         if(tableNoLng > 'TABLE'.length) {
             return reduceText()
         }
@@ -264,21 +267,66 @@ function startToRndTableNo() {
 }
 
 function rndTableNo() {
-    setTimeout(() => {
-        const no = (Math.floor(Math.random() * maxTableNo) + 1).toString()
-        document.getElementById('table-no').innerHTML = 'TABLE ' + ('000'.substr(0, 3 - no.length) + no) + ( rndCount % 5 == 1 ? '&nbsp;' : '_')
+    setTimeout(async () => {
+        const maxNo = window.drawType === 'ygpz' ? maxTableNo : maxSeatNo
+        const no = (Math.floor(Math.random() * maxNo) + 1).toString()
+        document.getElementById('table-no').innerHTML = 'NO. ' + ('000'.substr(0, 3 - no.length) + no) + ( rndCount % 5 == 1 ? '&nbsp;' : '_')
 
         rndCount ++
         if(rndCount < 20) {
             return rndTableNo()
         }
 
-        return saveTableNo()
+        if(window.drawType === 'ygpz') {
+            // exclude numbers in tables
+            if(tables.includes(no)) {
+                return rndTableNo()
+            }
+        }
+
+        if(window.drawType === 'reshen') {
+            if(seats.length === 12) {
+                return '0'
+            }
+            // exclude numbers in seats
+            if(seats.includes(no)) {
+                return rndTableNo()
+            }
+        }
+
+        return await saveTableNo(no)
     }, 100)
 }
 
-function saveTableNo() {
-    const tableNo = document.querySelector('.table-no').innerText
-    localStorage.setItem('tableNo', JSON.stringify({ tableNo }))
+async function saveTableNo(no) {
+    // const tableNo = document.querySelector('.table-no').innerText
+
+    window.drawType === 'ygpz' ? tables.push(no) : seats.push(no)
+
+    localStorage.setItem( window.drawType === 'ygpz' ? 'tableNo' : 'seatNo', JSON.stringify(window.drawType === 'ygpz' ? tables : seats) )
+
+    if(window.drawType === 'ygpz') {
+        const res = await fetch('/saveTables', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                tables
+            })
+        })
+    }
+
+    if(window.drawType === 'reshen') {
+        const res = await fetch('/saveSeats', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                seats
+            })
+        })
+    }
 }
 // end table draw

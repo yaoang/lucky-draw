@@ -4,6 +4,7 @@ import multer from 'multer'
 import fs from 'node:fs'
 import {GIFTS, getGift} from './gift.mjs'
 import bodyParser from 'body-parser'
+import json2csv from 'json2csv'
 // import path from 'node:path'
 
 const app = express()
@@ -87,6 +88,22 @@ app.get('/employees', (req, res) => {
     return res.json(employeeData)
 })
 
+/**
+ * to save lucky draw data of ygpz
+ */
+app.post('/saveTables', (req, res) => {{
+    const { tables } = req.body
+    fs.writeFileSync('tables.json', JSON.stringify(tables))
+}})
+
+/**
+ * to save lucky draw data of reshen
+ */
+app.post('/saveSeats', (req, res) => {{
+    const { seats } = req.body
+    fs.writeFileSync('seats.json', JSON.stringify(seats))
+}})
+
 // static dir
 app.use(express.static('static'))
 
@@ -144,9 +161,36 @@ function drawWinners(req, res, isExlucde = true) {
 }
 
 // Query winning results
-app.get('/result', (req, res) => {
+app.get('/result/winners', (req, res) => {
     const drawResults = fs.existsSync('draw.json') ? JSON.parse(fs.readFileSync('draw.json', 'utf-8')) : []
-    res.json({ success: true, drawResults: drawResults })
+    res.json(drawResults)
+})
+
+/**
+ * query lucky draw result for ygpz
+ */
+app.get('/result/ygpz', (req, res) => {
+    const drawResults = fs.existsSync('tables.json') ? JSON.parse(fs.readFileSync('tables.json', 'utf-8')) : []
+    res.json(drawResults)
+})
+
+/**
+ * query lucky draw for reshen
+ */
+app.get('/result/reshen', (req, res) => {
+    const drawResults = fs.existsSync('seats.json') ? JSON.parse(fs.readFileSync('seats.json', 'utf-8')) : []
+    res.json(drawResults)
+})
+
+/**
+ * query winning results as csv
+ */
+app.get('/result/csv', (req, res) => {
+    const drawResults = fs.existsSync('draw.json') ? JSON.parse(fs.readFileSync('draw.json', 'utf-8')) : []
+    const csv = json2csv.parse(drawResults)
+    res.setHeader('Content-Type', 'text/csv')
+    // res.setHeader('Content-Disposition', 'attachment; filename="draw-results.csv"')
+    res.send(csv)
 })
 
 app.listen(port, () => {

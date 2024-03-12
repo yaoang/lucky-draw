@@ -25,7 +25,8 @@ export const GIFTS = {
     "stone": { "name": "石头P10Pro扫拖机器人", "count": 1, "img": "ygpz.png" },
     "switch": { "name": "Switch NS OLED 日版", "count": 2, "img": "ygpz.png" },
     "waterpik": { "name": "Waterpik水牙线GT3-12", "count": 4, "img": "ygpz.png" },
-    "ygpz": { "name": "礼品卡100元", "count": 10, "img": "ygpz.png", "tableCount": 127 },
+    "ygpz": { "name": "礼品卡100元", "count": 1, "img": "ygpz.png", "tableCount": 127 },
+    "reshen": { "name": "热身礼品卡100元", "count": 1, "img": "ygpz.png", "tableSeats": 12 },
     "yjj4": { "name": "云鲸J4 水箱版", "count": 1, "img": "ygpz.png" },
     "zOther": { "name": "龙年好礼", "count": 1, "img": "ygpz.png" }
 }
