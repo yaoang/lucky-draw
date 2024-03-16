@@ -36,7 +36,7 @@
   
   /* 应用动画 */
   .long img {
-    animation: shake 10s infinite;
+    animation: shake 3s infinite;
   }
 
 
