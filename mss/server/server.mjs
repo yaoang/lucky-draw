@@ -2,7 +2,7 @@ import express from 'express'
 import xlsx from 'xlsx'
 import multer from 'multer'
 import fs from 'node:fs'
-import {GIFTS, getGift} from './gift.mjs'
+import {GIFTS, TURNS, getGift} from './gift.mjs'
 import bodyParser from 'body-parser'
 import json2csv from 'json2csv'
 // import path from 'node:path'
@@ -28,6 +28,21 @@ app.use(bodyParser.json())
 
 app.get('/allDrawTypes', function (req, res) {
     return res.json(GIFTS)
+})
+
+app.get('/getTurnsAndGifts', function(req, res) {
+    const result = TURNS.map(t => {
+        const sandengjiang = t['sandengjiang'].map(g => ({...GIFTS[g], key: g}))
+        const erdengjiang = t['erdengjiang'].map(g => ({...GIFTS[g], key: g}))
+        const yidengjiang = t['yidengjiang'].map(g => ({...GIFTS[g], key: g}))
+        return {
+            name: t.name,
+            sandengjiang,
+            erdengjiang,
+            yidengjiang,
+        }
+    })
+    return res.json(result)
 })
 
 // set draw type
@@ -153,11 +168,22 @@ function drawWinners(req, res, isExlucde = true) {
         winners: randomWinners.map(winner => winner.id),
         drawType: drawType
     }
+    saveDrawResult(drawResult)
+
+    return res.json(randomWinners)
+}
+
+app.post('/saveDraw', async (req, res) => {
+    const body = req.body
+    const {drawResult} = body
+    saveDrawResult(drawResult)
+    return res.json({ success: true, message: 'Draw result saved successfully.' })
+})
+
+function saveDrawResult (drawResult) {
     const drawResults = fs.existsSync('draw.json') ? JSON.parse(fs.readFileSync('draw.json', 'utf-8')) : []
     drawResults.push(drawResult)
     fs.writeFileSync('draw.json', JSON.stringify(drawResults, null, 2))
-
-    return res.json(randomWinners)
 }
 
 // Query winning results

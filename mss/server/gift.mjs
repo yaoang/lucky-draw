@@ -44,3 +44,52 @@ export const getGiftName = (drawType) => {
 export const getGiftNumber = (drawType) => {
     return getGift(drawType).count
 }
+
+// to add turns, every turn has its gifts
+export const TURNS = [
+    {
+        name: "第一轮",
+        "sandengjiang": [
+            "changbaxiaojudang",
+            "huaweibluetooth"
+        ],
+        "erdengjiang": [
+            "huaweiwatch",
+            "jimi",
+            "dyson"
+        ],
+        "yidengjiang": [
+            "huawei"
+        ]
+    },
+    {
+        name: "第二轮",
+        "sandengjiang": [
+            "changbaxiaojudang",
+            "huaweibluetooth"
+        ],
+        "erdengjiang": [
+            "huaweiwatch",
+            "jimi",
+            "dyson"
+        ],
+        "yidengjiang": [
+            "huawei"
+        ]
+    },
+    {
+        name: "第三轮",
+        "sandengjiang": [
+            "changbaxiaojudang",
+            "huaweibluetooth"
+        ],
+        "erdengjiang": [
+            "huaweiwatch",
+            "jimi",
+            "dyson"
+        ],
+        "yidengjiang": [
+            "huawei"
+        ]
+    }
+]

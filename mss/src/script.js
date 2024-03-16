@@ -69,28 +69,39 @@ for (var i = 0; i < maxColums; i++) {
 
 
 var animationNum = -1
+/**
+ * to draw random user list
+ */
 var update = function () {
 
     // 背景色
     ctx.fillStyle = "rgba(213, 38, 29, 0)";
     ctx.fillRect(0, 0, cw, ch);
 
-    ctx2.clearRect(0, 0, cw, ch)
-
     employeeId = generateEmployeeId()
-
-    var i = fallingCharArr.length
-    while (i--) {
-        fallingCharArr[i].value = employeeId[i]
-        // console.log(i, employeeId[i], fallingCharArr[i].value)
-        fallingCharArr[i].draw(ctx);
-        // var v = fallingCharArr[i];
-    }
+    drawEmployeeIdInList(employeeId)
 
     animationNum = requestAnimationFrame(update);
 }
 
-const ouputWinner = (employeeId = '45004500', index, totalCount = 5) => {
+/**
+ * draw a employeeid in random list
+ */
+function drawEmployeeIdInList(employeeId) {
+    
+    ctx2.clearRect(0, 0, cw, ch)
+
+    var i = fallingCharArr.length
+    while (i--) {
+        console.log(`i=`, i, 'employeeId[i]=', employeeId[i])
+        fallingCharArr[i].value = employeeId[i]
+        fallingCharArr[i].draw(ctx);
+    }
+    // console.log(`employeeId=`, employeeId, 'fallingCharArr=', fallingCharArr)
+}
+
+const ouputWinner = (employeeId, index, totalCount = 5) => {
+    drawEmployeeIdInList(employeeId.toString())
     document.querySelector('.winners').innerHTML = document.querySelector('.winners').innerHTML + `<div class="employeeid">${employeeId}</div>`
 }
 
@@ -116,6 +127,10 @@ function saveWinners(prizeName) {
     localStorage.setItem('winners', JSON.stringify({ [prizeName]: winners }))
 }
 
+/**
+ * to output all winners and cancel animation
+ * @param {*} prizeName 
+ */
 async function startToRunDraw(prizeName) {
     document.querySelector('#lucky-draw').setAttribute('disabled', 'disabled')
     setTimeout(async () => {
@@ -125,8 +140,9 @@ async function startToRunDraw(prizeName) {
             startToRunDraw()
             // animationNum = requestAnimationFrame(update);
         } else {
-            console.log('done')
             cancelAnimationFrame(animationNum)
+            // console.log(window.drawResults[index-1].id)
+            // drawEmployeeIdInList(window.drawResults[index-1].id.toString())
 
             saveWinners(window.prizeName)
         }
@@ -134,6 +150,9 @@ async function startToRunDraw(prizeName) {
 }
 
 window.drawResults = []
+/**
+ * get draw result from api
+ */
 async function getDrawResult() {
     const res = await fetch('/draw')
     const results = await res.json()
@@ -200,13 +219,6 @@ async function generateEmployees() {
 }
 
 generateEmployees()
-// console.log(window.employees)
-
-// update();
-// startToRunDraw();
-// initAndDraw()
-
-
 
 async function updateDrawType() {
     const res = await fetch('/current')
