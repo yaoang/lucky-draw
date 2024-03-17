@@ -20,11 +20,15 @@
         }
 
         #information {
-            margin-bottom: 15px;
+            margin: 15px auto;
+        }
+
+        #links {
+            margin: 15px auto;
         }
 
         #drawTypes {
-            margin-top: 30px;
+            margin-top: 15px;
         }
 
         #drawType,
@@ -45,6 +49,14 @@
             background-color: black;
             color: #fff;
         }
+
+        h2 {
+            font-style: italic;
+        }
+
+        h3 {
+            color: red;
+        }
     </style>
 </head>
 
@@ -56,17 +68,23 @@
     </div>
 
     <div id="information" style="color: blue; "></div>
+    <div id="links">
+        <a href="/employees" target="_blank" title="employees">Employees(<span class="employee-num">0</span>)</a>
+        <!-- <a href="javascript:void(0)" onclick="drawWinners()" title="Draw">Draw</a> -->
+        <!-- <a href="javascript:void(0)" onclick="drawWinnersWithoutExlucde()" title="阳光普照">Draw 阳光普照</a> -->
+        <a href="/result" target="_blank" title="Check draw result">Result</a>
+    </div>
 
     <div class="item">
         <label for="numWinners">Number of Winners:</label>
         <input type="number" id="numWinners" value="1" min="1" max="30">
         <button onclick="updateDrawCount()">Save</button>
     </div>
-    <div>
-        <a href="/employees" target="_blank" title="employees">Employees(<span class="employee-num">0</span>)</a>
-        <!-- <a href="javascript:void(0)" onclick="drawWinners()" title="Draw">Draw</a> -->
-        <!-- <a href="javascript:void(0)" onclick="drawWinnersWithoutExlucde()" title="阳光普照">Draw 阳光普照</a> -->
-        <a href="/result" target="_blank" title="Check draw result">Result</a>
+
+    <div class="item">
+        <label for="tables">Number of tables:</label>
+        <input type="number" id="tables" value="128" min="1" max="200">
+        <button onclick="updateTableCount()">Save</button>
     </div>
 
     <div id="drawTypes">
@@ -79,6 +97,14 @@
 
     <script>
         window.drawType = ''
+        const PRIZENAMES = {
+            'sandengjiang': '三等奖',
+            'erdengjiang': '二等奖',
+            'yidengjiang': '一等奖',
+            'ygpz': '阳光普照奖'
+        }
+        window.tableCount = 128
+
         async function setDrawType(drawType) {
             console.log(`new drawtype = ${drawType}`)
             const res = await fetch('/setDrawType', {
@@ -107,6 +133,11 @@
             const dt = await res.json()
             window.drawTypes[window.drawType].count = count
             document.getElementById('drawCount').innerText = count
+        }
+
+        function updateTableCount() {
+            const tables = parseInt(document.getElementById('tables').value)
+            window.tableCount = tables
         }
 
         async function uploadFile() {
@@ -205,7 +236,7 @@
             const data = await res.json()
             const drawTypesData = document.getElementById('drawTypes')
             window.turns = data
-            const prizes = ['sandengjiang', 'erdengjiang', 'yidengjiang']
+            // const prizes = ['sandengjiang', 'erdengjiang', 'yidengjiang']
             window.turns.forEach(turn => {
                 // to creat a new div for every turn and append to dataTypesData element
                 const div = document.createElement('div')
@@ -213,10 +244,12 @@
                 div.innerHTML = `<h2>${turn.name}</h2>`
                 drawTypesData.appendChild(div)
 
+                const prizes = Object.keys(turn).filter(v => v !== 'name')
+
                 prizes.forEach(prize => {
                     // to create a new div for every prize and append to turn div element
                     const prizeDiv = document.createElement('div')
-                    prizeDiv.innerHTML = `<h3>${prize}</h3>`
+                    prizeDiv.innerHTML = `<h3>${PRIZENAMES[prize]}</h3>`
                     prizeDiv.classList.add('prize')
                     div.appendChild(prizeDiv)
 
@@ -233,32 +266,6 @@
                     })
                 })
             })
-
-            // const response = await fetch('/allDrawTypes')
-            // const data = await response.json()
-            // window.drawTypes = data
-            // const drawTypesData = document.getElementById('drawTypes')
-            // let startWith = ''
-            // Object.keys(window.drawTypes).forEach(key => {
-            //     if (startWith !== key[0]) {
-            //         drawTypesData.appendChild(document.createElement('br'))
-            //         startWith = key[0]
-            //         const span = document.createElement('span')
-            //         span.innerHTML = `${startWith.toUpperCase()}: `
-            //         drawTypesData.appendChild(span)
-            //     }
-
-            //     const dt = window.drawTypes[key]
-            //     const button = document.createElement('button')
-            //     button.classList.add('btn-primary')
-            //     button.onclick = () => {
-            //         setDrawType(key)
-            //         document.getElementById('drawType').innerHTML = `${dt.name}(${key})`
-            //         document.getElementById('drawCount').innerHTML = dt.count
-            //     }
-            //     button.textContent = dt.name
-            //     drawTypesData.appendChild(button)
-            // })
 
             document.querySelector('.btn-primary').click()
         }

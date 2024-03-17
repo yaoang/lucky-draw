@@ -49,7 +49,7 @@ export const getGiftNumber = (drawType) => {
 export const TURNS = [
     {
         name: '特别奖',
-        "ygpz": ['ygpz', 'zOther']
+        "ygpz": ['ygpz', 'reshen', 'zOther']
     },
     {
         name: "第一轮",
@@ -97,3 +97,10 @@ export const TURNS = [
         ]
     }
 ]
+
+export const PRIZENAMES = {
+    'sandengjiang': '三等奖',
+    'erdengjiang': '二等奖',
+    'yidengjiang': '一等奖',
+    'ygpz': '阳光普照奖'
+}

@@ -16,6 +16,7 @@ let winners = []
 let employeeData = []
 
 let drawType = 'ygpz'
+let tableCount = 127
 
 // Set up file upload middleware, limiting file size to 5 MB
 const upload = multer({
@@ -32,15 +33,18 @@ app.get('/allDrawTypes', function (req, res) {
 
 app.get('/getTurnsAndGifts', function(req, res) {
     const result = TURNS.map(t => {
-        const sandengjiang = t['sandengjiang'].map(g => ({...GIFTS[g], key: g}))
-        const erdengjiang = t['erdengjiang'].map(g => ({...GIFTS[g], key: g}))
-        const yidengjiang = t['yidengjiang'].map(g => ({...GIFTS[g], key: g}))
-        return {
-            name: t.name,
-            sandengjiang,
-            erdengjiang,
-            yidengjiang,
-        }
+        const tmp = {}
+        Object.keys(t).forEach(key => {
+            if(key === 'name') {
+                tmp.name = t[key]
+                return
+            }
+            t[key].forEach(g => {
+                tmp[key] = t[key].map(g => ({...GIFTS[g], key: g}))
+            })
+        })
+        // tmp.name = t.name
+        return tmp
     })
     return res.json(result)
 })
@@ -217,6 +221,10 @@ app.get('/result/csv', (req, res) => {
     res.setHeader('Content-Type', 'text/csv')
     // res.setHeader('Content-Disposition', 'attachment; filename="draw-results.csv"')
     res.send(csv)
+})
+
+app.post('/saveTableCount', (req, res) => {
+    
 })
 
 app.listen(port, () => {
