@@ -106,7 +106,8 @@ function drawEmployeeIdInList(employeeId) {
 
 const ouputWinner = (employeeId, index, totalCount = 5) => {
     drawEmployeeIdInList(employeeId.toString())
-    document.querySelector('.winners').innerHTML = document.querySelector('.winners').innerHTML + `<div class="employeeid">${employeeId}</div>`
+    document.querySelector('.winners').innerHTML =
+        document.querySelector('.winners').innerHTML + `<div class="employeeid">${employeeId}<div class="winnerName">${getEmployeeName(employeeId).name}</div></div>`
 }
 
 function sleep(ms) {
@@ -217,9 +218,10 @@ async function generateEmployees() {
     const es = await res.json()
 
     window.employees = es
+}
 
-    // return employees
-
+function getEmployeeName(employeeId) {
+    return window.employees.filter(employee => employee.id === employeeId)[0]
 }
 
 generateEmployees()
