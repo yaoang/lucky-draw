@@ -19,6 +19,7 @@ export const GIFTS = {
     "lipingka1000": { "name": "礼品卡1000元", "count": 6, "img": "ygpz.png" },
     "lipingka500": { "name": "礼品卡500元", "count": 9, "img": "ygpz.png" },
     "macbookpro": { "name": "MacBook Pro14", "count": 1, "img": "ygpz.png" },
+    "macBookAir": { name: 'MacBook Air 15英寸（M3）8G+256G', count: 1, 'img': 'yqpz.png'},
     "maxieer": { "name": "马歇尔 Action3音箱", "count": 1, "img": "ygpz.png" },
     "meidi": { "name": "美的空气炸锅 KZC6381", "count": 6, "img": "ygpz.png" },
     "mofei": { "name": "摩飞折叠暖菜板MR8301", "count": 6, "img": "ygpz.png" },
@@ -26,7 +27,7 @@ export const GIFTS = {
     "switch": { "name": "Switch NS OLED 日版", "count": 2, "img": "ygpz.png" },
     "waterpik": { "name": "Waterpik水牙线GT3-12", "count": 4, "img": "ygpz.png" },
     "ygpz": { "name": "礼品卡100元", "count": 1, "img": "ygpz.png", "tableCount": 127, index: 1 },
-    "reshen": { "name": "热身礼品卡100元", "count": 1, "img": "ygpz.png", "tableSeats": 12, index: 0 },
+    "reshen": { "name": "暖场礼品卡100元", "count": 1, "img": "ygpz.png", "tableSeats": 12, index: 0 },
     "yjj4": { "name": "云鲸J4 水箱版", "count": 1, "img": "ygpz.png" },
     "zOther": { "name": "龙年好礼", "count": 1, "img": "ygpz.png" }
 }
@@ -53,14 +54,17 @@ export const TURNS = [
     },
     {
         name: "第一轮",
+        'wudengjiang': ['changbaxiaojudang', 'haohan', 'meidi'],
+        'sidengjiang': ['jbl', 'lipingka1000'],
         "sandengjiang": [
-            "changbaxiaojudang",
-            "huaweibluetooth"
+            "dajiang",
+            'dajiangpocket2',
+            "huaweiwatch"
         ],
         "erdengjiang": [
-            "huaweiwatch",
+            "appleWatch",
             "jimi",
-            "dyson"
+            "maxieer"
         ],
         "yidengjiang": [
             "huawei"
@@ -68,37 +72,46 @@ export const TURNS = [
     },
     {
         name: "第二轮",
+        'wudengjiang': ['changbaxiaojudang', 'meidi', 'lipingka500'],
+        'sidengjiang': ['waterpik', 'aiguozhetouyingyi'],
         "sandengjiang": [
-            "changbaxiaojudang",
-            "huaweibluetooth"
+            "dajiang",
+            "dajiangpocket2",
+            'jimi'
         ],
         "erdengjiang": [
-            "huaweiwatch",
-            "jimi",
+            "appleWatch",
             "dyson"
         ],
         "yidengjiang": [
-            "huawei"
+            "macBookAir"
         ]
     },
     {
         name: "第三轮",
+        'wudengjiang': ['huaweibluetooth', 'lipingka500', 'mofei'],
+        'sidengjiang': ['airpods', 'lipingka1000'],
         "sandengjiang": [
-            "changbaxiaojudang",
-            "huaweibluetooth"
+            "dajiang",
+            "huaweipad",
+            'switch',
+            'dysonchuifengji'
         ],
         "erdengjiang": [
-            "huaweiwatch",
-            "jimi",
-            "dyson"
+            "appleWatch",
+            "ipad10",
+            "yjj4"
         ],
         "yidengjiang": [
-            "huawei"
+            "macBookAir",
+            'iphone'
         ]
     }
 ]
 
 export const PRIZENAMES = {
+    'wudengjiang': '五等奖',
+    'sidengjiang': '四等奖',
     'sandengjiang': '三等奖',
     'erdengjiang': '二等奖',
     'yidengjiang': '一等奖',
