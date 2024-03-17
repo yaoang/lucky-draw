@@ -48,6 +48,10 @@ export const getGiftNumber = (drawType) => {
 // to add turns, every turn has its gifts
 export const TURNS = [
     {
+        name: '特别奖',
+        "ygpz": ['ygpz', 'zOther']
+    },
+    {
         name: "第一轮",
         "sandengjiang": [
             "changbaxiaojudang",
