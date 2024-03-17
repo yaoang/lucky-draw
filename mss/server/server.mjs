@@ -170,7 +170,8 @@ function drawWinners(req, res, isExlucde = true) {
     const drawResult = {
         dateTime: new Date().toISOString(),
         winners: randomWinners.map(winner => winner.id),
-        drawType: drawType
+        drawType: drawType,
+        prizeName: GIFTS[drawType].name
     }
     saveDrawResult(drawResult)
 
@@ -219,12 +220,19 @@ app.get('/result/csv', (req, res) => {
     const drawResults = fs.existsSync('draw.json') ? JSON.parse(fs.readFileSync('draw.json', 'utf-8')) : []
     const csv = json2csv.parse(drawResults)
     res.setHeader('Content-Type', 'text/csv')
-    // res.setHeader('Content-Disposition', 'attachment; filename="draw-results.csv"')
-    res.send(csv)
+    res.setHeader('Content-Disposition', 'attachment; filename="draw-results.csv"')
+    return res.send(csv)
 })
 
 app.post('/saveTableCount', (req, res) => {
-    
+    const body = req.body
+    const {tc} = body
+    tableCount = tc
+    return res.json({success: true, tableCount})
+})
+
+app.get('/tableCount', (req, res) => {
+    return res.json({tableCount})
 })
 
 app.listen(port, () => {

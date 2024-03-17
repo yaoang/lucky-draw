@@ -123,7 +123,7 @@
 
         async function updateDrawCount() {
             const count = document.getElementById('numWinners').value
-            const res = await fetch('/updateDrawCount', {
+            const res = await fetch('./updateDrawCount', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -135,9 +135,17 @@
             document.getElementById('drawCount').innerText = count
         }
 
-        function updateTableCount() {
+        async function updateTableCount() {
             const tables = parseInt(document.getElementById('tables').value)
             window.tableCount = tables
+
+            fetch('./saveTableCount', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({ tc: tables })
+            })
         }
 
         async function uploadFile() {
@@ -270,7 +278,16 @@
             document.querySelector('.btn-primary').click()
         }
 
+        async function getTableCount() {
+            const res = await fetch('./tableCount')
+            const data = await res.json()
+            const {tableCount} = data
+            document.getElementById('tables').value = tableCount
+        }
+
         getAllDrawTypes()
+
+        getTableCount()
     </script>
 </body>
 

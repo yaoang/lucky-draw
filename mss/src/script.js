@@ -17,7 +17,11 @@ canvas.height = canvas2.height = ch;
 canvas.fillStyle = 'rgb(213, 38, 29)'
 
 let totalCount = 6
-let drawTimeMillis = totalCount > 5 ? 500 : (totalCount < 3 ? 1500 : 1000)
+let drawTimeMillis = getDrawTimeMillis()
+
+function getDrawTimeMillis() {
+    return totalCount > 5 ? 800 : (totalCount >= 3 ? 2000 : totalCount === 2 ? 3000 : 4000)
+}
 
 let employeeId = ''
 window.prizeName = ''
@@ -232,7 +236,7 @@ async function updateDrawType() {
         document.getElementById('draw-name').innerText = name
         document.getElementById('img-production').src = `./productions/${img}`
         totalCount = count
-        drawTimeMillis = totalCount > 5 ? 500 : (totalCount < 3 ? 1500 : 1000)
+        drawTimeMillis = getDrawTimeMillis()
         document.getElementById('winners').innerHTML = ''
 
         if (dt === 'ygpz' || dt === 'reshen') {
@@ -245,7 +249,7 @@ async function updateDrawType() {
     }
 }
 
-setInterval(updateDrawType, 1000)
+setInterval(updpateInformations, 1000)
 
 
 
@@ -341,4 +345,16 @@ async function saveTableNo(no) {
         })
     }
 }
-// end table draw
+
+async function getTableCount() {
+    const res = await fetch('./tableCount')
+    const data = await res.json()
+    const {tableCount} = data
+    maxTableNo = tableCount
+}
+
+function updpateInformations () {
+
+    updateDrawType()
+    getTableCount()
+}
